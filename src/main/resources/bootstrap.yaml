@@ -1,0 +1,14 @@
+info:
+  build:
+    name: Custom analyzer service
+    description: ReportPortal Custom Analyzer Service
+    version: '@version@'
+    branch: '@branch@'
+    repo: '@repo@'
+
+spring:
+  profiles:
+    ## Profiles list
+    active: ${rp.profiles:default}
+  application:
+    name: custom-analyzer

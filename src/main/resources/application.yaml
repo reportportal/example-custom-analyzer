@@ -1,0 +1,16 @@
+server:
+  port: 8999
+
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        tags:
+          - urlprefix-/custom-analyzer strip=/custom-analyzer
+          - analyzer=custom
+          - analyzer_priority=1
+          - analyzer_index=false
+        register: true
+      enabled: true
