@@ -1,19 +1,25 @@
-*.class
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
 
-# Package Files #
-*.jar
-!gradle/wrapper/**
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
-.idea/
+### NetBeans ###
+nbproject/private/
 build/
-.gradle/
-out/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
