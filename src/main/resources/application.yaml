@@ -10,7 +10,7 @@ spring:
         tags:
           - urlprefix-/custom-analyzer strip=/custom-analyzer
           - analyzer=custom
-          - analyzer_priority=1
+          - analyzer_priority=0
           - analyzer_index=false
         register: true
       enabled: true
