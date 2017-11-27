@@ -11,6 +11,6 @@ spring:
           - urlprefix-/custom-analyzer strip=/custom-analyzer
           - analyzer=custom
           - analyzer_priority=0
-          - analyzer_index=false
+          - analyzer_index=true
         register: true
       enabled: true

@@ -22,6 +22,7 @@
 package by.pbortnik.analyzer.controller;
 
 import by.pbortnik.analyzer.model.IndexLaunch;
+import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -45,16 +46,18 @@ public class SimpleStorage {
 	}
 
 	public void addAll(List<IndexLaunch> launches) {
-		Map<String, List<IndexLaunch>> map = new HashMap<>();
-		map.put(launches.get(0).getProject(), launches);
+		IndexLaunch launch = launches.get(0);
 
-		map.forEach((key, value) -> {
-			if (repository.containsKey(key)) {
-				repository.get(key).addAll(launches);
-			} else {
-				repository.putAll(map);
-			}
-		});
+		if (repository.containsKey(launch.getProject())) {
+			List<IndexLaunch> indexLaunches = repository.get(launch.getProject());
+			indexLaunches.forEach(indexed -> {
+				if (indexed.getLaunchId().equals(launch.getLaunchId())) {
+					indexed.getTestItems().addAll(launch.getTestItems());
+				}
+			});
+		} else {
+			repository.put(launch.getProject(), Lists.newArrayList(launch));
+		}
 	}
 
 	public void removeProject(String project) {
@@ -62,6 +65,6 @@ public class SimpleStorage {
 	}
 
 	public void cleanIndex(List<String> ids, String project) {
-		//clean index realisation
+		//clean index implementation
 	}
 }

@@ -29,7 +29,7 @@ public class AnalyzerController {
 
 		indexLaunch.getTestItems().forEach(item -> {
 			if (item.getLogs().stream().anyMatch(it -> it.getMessage().contains("AssertionError"))) {
-				item.setIssueType("PB001");
+				item.setIssueType("AB001");
 			}
 			simpleStorage.getRepository()
 					.entrySet()
