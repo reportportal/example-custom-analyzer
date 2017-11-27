@@ -147,7 +147,7 @@ For correct interaction with Report Portal the analyzer must have several requir
       parameter should be lower than 10. If the value is not specified or incorrect than the priority is the 
       lowest by default.
       
-* `analyzer_index=false`
+* `analyzer_index=true`
 
       If the service processes previous results it should have the tag 'analyzer_index=true'. Does index logs.
       If value is not specified or incorrect than 'false' by default.
