@@ -9,7 +9,7 @@ In a realization should be implemented at least one controller with path that co
 ```yaml
 http://host:port/_analyzer
 ```
-It consumes requests in the next format:
+It consumes requests in the next json format:
 
 ```yaml
 [
@@ -46,6 +46,23 @@ It consumes requests in the next format:
   }
 ]
 ```
+
+ReportPortal accepts the analyzed items as a response in the next json format:
+
+```yaml
+[
+    {
+        # Test item id in RP
+        "test_item": "5a0d84b6eff46f62cfd9cd9f",
+        # Analyzed issue type
+        "issue_type": "PB001",
+        # The most relevant item id. In default implementation it used for taking a comment 
+        # and an external system issue from the most relevant item in RP
+        "relevant_item": "5a1be11deff46f8b838fc5e5"
+    }
+]
+```
+
 
 ### Custom Analyzer Example
 
