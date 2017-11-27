@@ -1,13 +1,13 @@
 # Custom analyzer
 
-Since version 4.0 ReportPortal uses a new version of analyzer. The implementation of analyzer was moved to the
-separate service. If the default implementation does not provide a solution it can be extended by 
-custom realization of analyzer. Default analyzer can work together with custom. ReportPortal has a [client](https://github.com/reportportal/service-api/blob/develop/src/main/java/com/epam/ta/reportportal/core/analyzer/client/AnalyzerServiceClient.java) communicate
-with analyzers by HTTP and it has pretty simple interface. 
+Since the version 4.0 Report Portal uses a new version of an analyzer. The implementation of the analyzer was moved to the
+separate service. If the default implementation does not provide a solution it can be extended by a
+custom implementation of an analyzer. The default analyzer can work together with a custom one. ReportPortal has a [client](https://github.com/reportportal/service-api/blob/develop/src/main/java/com/epam/ta/reportportal/core/analyzer/client/AnalyzerServiceClient.java) that communicates
+with analyzers by HTTP and it has a pretty simple interface. 
 
 ### Supported endpoints:
 
-All supported endpoints that should be implemented in custom analyzer are:
+All supported endpoints that could be implemented in a custom analyzer are:
 
 [Analyze launch](#analyze)
 ```yaml
@@ -15,19 +15,19 @@ POST
 http://analyzer_host:port/_analyzer
 ```
 
-[Index items](). Optional
+[Index items](#analyzer-with-processing-previous-data). Optional
 ```yaml
 POST
 http://analyzer_host:port/_index
 ```
 
-[Delete indexed project](). Optional
+[Delete indexed project](#analyzer-with-processing-previous-data). Optional
 ```yaml
 DELETE
 http://analyzer_host:port/_index/{project}
 ```
 
-[Clean indexed items](). Optional
+[Clean indexed items](#analyzer-with-processing-previous-data). Optional
 ```yaml
 PUT
 http://analyzer_host:port/_index/delete
@@ -35,14 +35,14 @@ http://analyzer_host:port/_index/delete
 
 
 ### Analyze
-In a realization should be implemented at least [one controller](https://github.com/reportportal/example-custom-analyzer/blob/b866fb64441cb25651e37e39411631aa2b6f46d7/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L17) that consumes request from RP to analyze launch with the next endpoint:
+In a custom analyzer should be implemented at least [one endpoint](https://github.com/reportportal/example-custom-analyzer/blob/b866fb64441cb25651e37e39411631aa2b6f46d7/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L17) that consumes request from RP with a launch to be analyzed using the next endpoint:
 ```yaml
 POST
 http://analyzer_host:port/_analyzer
 ```
-It consumes requests in the next json format:
+It should consume requests in the next json format:
 
-[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/java/by/pbortnik/analyzer/model/IndexLaunch.java)
+[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/develop/src/main/java/by/pbortnik/analyzer/model/IndexLaunch.java)
 
 ```yaml
 [
@@ -82,7 +82,7 @@ It consumes requests in the next json format:
 In the current default realization it actually sends only one launch in any case. 
 
 
-ReportPortal accepts the analyzed items back as a response in the next json format:
+Report Portal accepts the analyzed items back as a response in the next json format:
 
 [Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/java/by/pbortnik/analyzer/model/AnalyzedItemRs.java)
 ```yaml
@@ -110,7 +110,7 @@ POST
 http://analyzer_host:port/_index
 ```
 
-The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current realisation RP doesn't really use the [response from index](https://github.com/reportportal/service-api/blob/master/src/main/java/com/epam/ta/reportportal/core/analyzer/model/IndexRs.java) so it could be ignored.
+The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current implementation RP doesn't really use the [response from index](https://github.com/reportportal/service-api/blob/master/src/main/java/com/epam/ta/reportportal/core/analyzer/model/IndexRs.java) so it could be ignored (or just 'null').
 
 There are a few more optional endpoints. They are required for the default analyzer implementation. The first one is for deleting all the accumulated information about specified project: 
 
@@ -134,7 +134,7 @@ http://analyzer_host:port/_index/delete
 
 ### Configuring service for Consul
 
-For correct interaction with ReportPortal the analyzer must have several required tags in it's consul service configuration. 
+For correct interaction with Report Portal the analyzer must have several required tags in it's consul service configuration. 
 
 * `analyzer=custom` 
 
@@ -161,3 +161,7 @@ http://reportportal_host:port/composite/info
 ```
 
 ![composite/info](/CompositeInfo.png?raw=true)
+
+### Implemntation example
+
+This repository is an example of all endpoints' implementation using Java
