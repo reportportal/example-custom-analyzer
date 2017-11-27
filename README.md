@@ -11,7 +11,7 @@ http://host:port/_analyzer
 ```
 It consumes request in the next format:
 
-```json
+```yaml
 [
   {
     "launchId": "5a0d84a8eff46f62cfd9cbe4",                   // Launch id
