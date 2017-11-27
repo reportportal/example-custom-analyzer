@@ -9,7 +9,7 @@ with analyzers by HTTP and it has pretty simple interface.
 
 All supported endpoints that should be implemented in custom analyzer are:
 
-[Analyze launch](https://github.com/reportportal/example-custom-analyzer/blob/master/README.md#L37-L103)
+[Analyze launch](#analyze)
 ```yaml
 POST
 http://analyzer_host:port/_analyzer
