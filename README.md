@@ -50,8 +50,10 @@ It consumes requests in the next json format:
   }
 ]
 ```
+In the current default realization it actually sends only one launch in any case. 
 
-ReportPortal accepts the analyzed items as a response in the next json format:
+
+ReportPortal accepts the analyzed items back as a response in the next json format:
 
 [Realization in Java](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/java/by/pbortnik/analyzer/model/AnalyzedItemRs.java)
 ```yaml
@@ -67,6 +69,8 @@ ReportPortal accepts the analyzed items as a response in the next json format:
     }
 ]
 ```
+
+As a result items are updated in ReportPortal database with new issue, comment and reference in BTS if some are found.
 
 ### Analyzer with processing previous data
 
@@ -125,3 +129,5 @@ All included analyzers could be founded here:
 GET
 http://reportportal_host:port/composite/info
 ```
+
+![composite/info](/CompositeInfo.png?raw=true)
