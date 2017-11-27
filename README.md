@@ -107,16 +107,16 @@ http://analyzer_host:port/_index/delete
 
 For correct interaction with ReportPortal the analyzer must have several required tags in it's consul service configuration. 
 
-* analyzer=custom 
+* `analyzer=custom` 
 
       Marks that the current service is analyzer implementation with name 'custom'
 
-* analyzer_priority=0 
+* `analyzer_priority=0` 
 
       If the service is going to work with default analyzer together there should be specified the serivce's priority 
       For basic analyzer it is 10. So if the current analyzer's resutls are more important than defaults the priorityp
       arameter should be lower than 10. If the value is not specified or incorrect than priority is lowest by default.
-* analyzer_index=false
+* `analyzer_index=false`
 
       If the serivce processes previous results it should have the tag 'analyzer_index=true'. Does index logs. If value is
       not specified or incorrect than 'false' by default.
