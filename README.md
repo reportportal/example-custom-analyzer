@@ -6,7 +6,7 @@ custom realization of analyzer. Default analyzer can work together with custom. 
 with analyzers by HTTP and it has pretty simple interface. 
 
 ### Analyze
-In a realization should be implemented at least one controller with path that consumes request from RP to analyze launch:
+In a realization should be implemented at least one controller that consumes request from RP to analyze launch with url:
 ```yaml
 http://host:port/_analyzer
 ```
@@ -66,13 +66,13 @@ ReportPortal accepts the analyzed items as a response in the next json format:
 
 ### Preprocessing data
 
-If analyzing alghoritm is based on the previous results, analyzer interface also provides possibility to collect information about updated items in RP. To implement that there should be provided one more controller:
+If analyzing alghoritm is based on the previous results, analyzer interface also provides possibility to collect information about updated items in RP. To implement that there should be implemented one more controller with url:
 
 ```yaml
 http://host:port/_index
 ```
 
-The request contains the same list of json objects as in "_analyze" higher except of the "issueType", it sould be provided by user.
+The request contains the same list of json objects as in "_analyze" higher except of the "issueType", it sould be provided by user. In current realisation RP doesn't really use the response from index so it could be ignored.
 
 ### Custom Analyzer Example
 
