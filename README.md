@@ -35,7 +35,7 @@ http://analyzer_host:port/_index/delete
 
 
 ### Analyze
-In a custom analyzer should be implemented at least [one endpoint](https://github.com/reportportal/example-custom-analyzer/blob/b866fb64441cb25651e37e39411631aa2b6f46d7/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L17) that consumes request from RP with a launch to be analyzed using the next endpoint:
+In a custom analyzer should be implemented at least [one endpoint](https://github.com/reportportal/example-custom-analyzer/blob/945b958ca02babb90e25e072e455a4bdb34f51da/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L23) that consumes request from RP with a launch to be analyzed using the next endpoint:
 ```yaml
 POST
 http://analyzer_host:port/_analyzer
@@ -103,7 +103,7 @@ As a result items are updated in ReportPortal database with a new issue, comment
 
 ### Analyzer with processing previous data
 
-If an analyzing alghorithm is based on the previous results, the analyzer interface also provides possibility to collect information about updated items in RP. To have that logic there should be implemented one more endpoint:
+If an analyzing alghorithm is based on the previous results, the analyzer interface also provides possibility to collect information about updated items in RP. To have that logic there should be implemented [one more endpoint](https://github.com/reportportal/example-custom-analyzer/blob/945b958ca02babb90e25e072e455a4bdb34f51da/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L51):
 
 ```yaml
 POST
@@ -112,13 +112,13 @@ http://analyzer_host:port/_index
 
 The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current implementation RP doesn't really use the [response from index](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/java/by/pbortnik/analyzer/model/IndexRs.java) so it could be ignored (or just 'null').
 
-There are a few more optional endpoints. They are required for the default analyzer implementation. The first one is for deleting all the accumulated information about specified project: 
+There are a few more optional endpoints. They are required for the default analyzer implementation. [The first one](https://github.com/reportportal/example-custom-analyzer/blob/945b958ca02babb90e25e072e455a4bdb34f51da/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L59) is for deleting all the accumulated information about specified project: 
 
 ```yaml
 DELETE
 http://analyzer_host:port/_index/{project}
 ```
-The other is for cleaning information about the specified test items from the specified project: 
+[The other](https://github.com/reportportal/example-custom-analyzer/blob/945b958ca02babb90e25e072e455a4bdb34f51da/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L65) is for cleaning information about the specified test items from the specified project: 
 
 ```yaml
 PUT
