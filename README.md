@@ -122,6 +122,6 @@ For correct interaction with ReportPortal the analyzer must have several require
 All included analyzers could be founded here:
 
 ```yaml
-DELETE
+GET
 http://reportportal_host:port/composite/info
 ```
