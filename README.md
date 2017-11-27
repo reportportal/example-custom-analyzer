@@ -125,3 +125,5 @@ All included analyzers could be founded here:
 GET
 http://reportportal_host:port/composite/info
 ```
+
+![composite/info](/CompositeInfo.png?raw=true)
