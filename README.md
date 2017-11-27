@@ -9,26 +9,38 @@ In a realization should be implemented at least one controller with path that co
 ```yaml
 http://host:port/_analyzer
 ```
-It consumes request in the next format:
+It consumes requests in the next format:
 
 ```yaml
 [
   {
-    "launchId": "5a0d84a8eff46f62cfd9cbe4",                   // Launch id
-    "launchName": "test-results",                             // Launch name
-    "project": "analyzer",                                    // Project name
-    "testItems": [                                            // Launch name
+    # Launch id in ReportPortal
+    "launchId": "5a0d84a8eff46f62cfd9cbe4",                   
+    # Launch name in ReportPortal. In default implementation issues from the launch with
+    # the same launch name have a higher priority
+    "launchName": "test-results",                             
+    # Project name. Default implementation categorises items by project  
+    "project": "analyzer",                                    
+    # Test items to be analyzed
+    "testItems": [                                            
       {
-        "autoAnalyzed": false,                                // Optional, used for marking items as analyzed. In default implementation it means that the item that was analyzed by human has higher priority 
-        "testItemId": "5a0d84b6eff46f62cfd9cd9f",             // Test item id
-        "issueType": "TI001",                                 // Only items with status TO_INVESTIGATE can be analyzed
+        # Optional, used for marking items as analyzed. In default implementation it means 
+        # that the item that was analyzed by human ('false') has a higher priority
+        "autoAnalyzed": false,                                 
+        # Test item id in ReportPortal
+        "testItemId": "5a0d84b6eff46f62cfd9cd9f",             
+        # Only items with RP status 'TO_INVESTIGATE' can be analyzed
+        "issueType": "TI001",                       
+        # Test item's logs with level "ERROR" and higher          
         "logs": [
           {
             "logLevel": 40000,
             "message": "java.lang.AssertionError: expected..."
           } 
-        ],                                                    // Item logs with level ERROR and higer
-        "uniqueId": "auto:f9377b76a3ebede22df09fa76400788b"   // Item's unique id in RP. In default implementation issue from item with the same unique id has higer priority
+        ],                                                    
+        # Test Item's unique id in RP. In default implementation issue from item 
+        # with the same unique id has a higher priority
+        "uniqueId": "auto:f9377b76a3ebede22df09fa76400788b"   
       }
     ]
   }
