@@ -8,7 +8,8 @@ with analyzers by HTTP and it has pretty simple interface.
 ### Analyze
 In a realization should be implemented at least one controller that consumes request from RP to analyze launch with url:
 ```yaml
-http://host:port/_analyzer
+POST
+http://analyzer_host:port/_analyzer
 ```
 It consumes requests in the next json format:
 
@@ -64,15 +65,36 @@ ReportPortal accepts the analyzed items as a response in the next json format:
 ]
 ```
 
-### Preprocessing data
+### Analyzer with processing previous data
 
-If analyzing alghoritm is based on the previous results, analyzer interface also provides possibility to collect information about updated items in RP. To implement that there should be implemented one more controller with url:
+If analyzing alghoritm is based on the previous results, analyzer interface also provides possibility to collect information about updated items in RP. To implement that there should be realized one more controller with url:
 
 ```yaml
-http://host:port/_index
+POST
+http://analyzer_host:port/_index
 ```
 
-The request contains the same list of json objects as in "_analyze" higher except of the "issueType", it sould be provided by user. In current realisation RP doesn't really use the response from index so it could be ignored.
+The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current realisation RP doesn't really use the response from index so it could be ignored.
+
+There are a few more optional interfaces. They are required for the default analyzer realization. One is for deleting all accumulated information about specified project: 
+
+```yaml
+DELETE
+http://analyzer_host:port/_index/{project}
+```
+The other is for cleaning information about the specified test items from the specified project: 
+
+```yaml
+PUT
+http://analyzer_host:port/_index/delete
+
+{
+  "ids": [
+    "5a1be11deff46f8b838fc5e5"
+  ],
+  "project": "analyzer"
+}
+```
 
 ### Custom Analyzer Example
 
