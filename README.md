@@ -42,7 +42,7 @@ http://analyzer_host:port/_analyzer
 ```
 It should consume requests in the next json format:
 
-[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/develop/src/main/java/by/pbortnik/analyzer/model/IndexLaunch.java)
+[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/java/by/pbortnik/analyzer/model/IndexLaunch.java)
 
 ```yaml
 [
@@ -84,7 +84,7 @@ In the current default realization it actually sends only one launch in any case
 
 Report Portal accepts the analyzed items back as a response in the next json format:
 
-[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/java/by/pbortnik/analyzer/model/AnalyzedItemRs.java)
+[Implementation in Java](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/java/by/pbortnik/analyzer/model/AnalyzedItemRs.java)
 ```yaml
 [
     {
@@ -110,7 +110,7 @@ POST
 http://analyzer_host:port/_index
 ```
 
-The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current implementation RP doesn't really use the [response from index](https://github.com/reportportal/service-api/blob/master/src/main/java/com/epam/ta/reportportal/core/analyzer/model/IndexRs.java) so it could be ignored (or just 'null').
+The request contains the same list of json objects as in "_analyze" higher except of the "issueType" sould be provided by user and it should be different from "TO_INVESTIGATE". In the current implementation RP doesn't really use the [response from index](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/java/by/pbortnik/analyzer/model/IndexRs.java) so it could be ignored (or just 'null').
 
 There are a few more optional endpoints. They are required for the default analyzer implementation. The first one is for deleting all the accumulated information about specified project: 
 
@@ -152,7 +152,7 @@ For correct interaction with Report Portal the analyzer must have several requir
       If the service processes previous results it should have the tag 'analyzer_index=true'. Does index logs.
       If value is not specified or incorrect than 'false' by default.
 
-[Java configuration example](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/resources/application.yaml)
+[Java configuration example](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/resources/application.yaml)
 
 All included analyzers could be founded by sending a reques to the next endpoint:
 
