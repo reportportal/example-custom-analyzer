@@ -118,7 +118,7 @@ For correct interaction with ReportPortal the analyzer must have several require
       arameter should be lower than 10. If the value is not specified or incorrect than priority is lowest by default.
 * `analyzer_index=false`
 
-      If the serivce processes previous results it should have the tag 'analyzer_index=true'. Does index logs. If value is
+      If the service processes previous results it should have the tag 'analyzer_index=true'. Does index logs. If value is
       not specified or incorrect than 'false' by default.
 
 [Java configuration example](https://github.com/reportportal/example-custom-analyzer/blob/master/src/main/resources/application.yaml)
