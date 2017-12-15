@@ -14,3 +14,22 @@ spring:
           - analyzer_index=true
         register: true
       enabled: true
+endpoints:
+  info:
+    enabled: true
+    sensitive: false
+  health:
+    enabled: true
+    sensitive: false
+management:
+  security:
+    enabled: false
+logging:
+  level:
+    root: debug
+    sun.rmi: warn
+    org.apache: warn
+    org.springframework.core: warn
+    org.springframework.beans: warn
+    org.springframework.context: warn
+    org.springframework.web: warn
