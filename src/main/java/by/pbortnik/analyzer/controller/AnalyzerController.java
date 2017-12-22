@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -26,24 +27,22 @@ public class AnalyzerController {
 	public List<AnalyzedItemRs> analyze(@RequestBody List<IndexLaunch> launches) {
 		List<AnalyzedItemRs> response = new ArrayList<>();
 		IndexLaunch indexLaunch = launches.get(0);
-
+		String project = indexLaunch.getProject();
 		indexLaunch.getTestItems().forEach(item -> {
-			if (item.getLogs().stream().anyMatch(it -> it.getMessage().contains("AssertionError"))) {
-				item.setIssueType("AB001");
-			}
-			simpleStorage.getRepository()
-					.entrySet()
-					.stream()
-					.flatMap(it -> it.getValue().stream())
-					.flatMap(it -> it.getTestItems().stream())
+			List<AnalyzedItemRs> analyzedItemRs = simpleStorage.getRepository().get(project);
+			Optional<AnalyzedItemRs> relevantItem = analyzedItemRs.stream()
 					.filter(it -> it.getUniqueId().equals(item.getUniqueId()))
-					.findFirst()
-					.ifPresent(it -> {
-						AnalyzedItemRs analyzedItem = new AnalyzedItemRs();
-						analyzedItem.setItemId(item.getTestItemId());
-						analyzedItem.setIssueType(it.getIssueType());
-						response.add(analyzedItem);
-					});
+					.findFirst();
+
+			if (relevantItem.isPresent()) {
+				AnalyzedItemRs rs = new AnalyzedItemRs();
+				rs.setItemId(item.getTestItemId());
+				rs.setRelevantItemId(relevantItem.get().getItemId());
+				rs.setIssueType(relevantItem.get().getIssueType());
+				rs.setUniqueId(item.getUniqueId());
+				response.add(rs);
+			}
+
 		});
 		return response;
 	}

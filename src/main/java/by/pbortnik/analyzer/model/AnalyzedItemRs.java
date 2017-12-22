@@ -37,6 +37,8 @@ public class AnalyzedItemRs implements Comparable<AnalyzedItemRs> {
 	@JsonProperty("issue_type")
 	private String issueType;
 
+	private String uniqueId;
+
 	@Override
 	public int compareTo(AnalyzedItemRs o) {
 		return itemId.compareTo(o.getItemId());
@@ -64,5 +66,13 @@ public class AnalyzedItemRs implements Comparable<AnalyzedItemRs> {
 
 	public void setIssueType(String issueType) {
 		this.issueType = issueType;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
 	}
 }

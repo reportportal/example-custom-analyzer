@@ -21,13 +21,17 @@
 
 package by.pbortnik.analyzer.controller;
 
+import by.pbortnik.analyzer.model.AnalyzedItemRs;
 import by.pbortnik.analyzer.model.IndexLaunch;
-import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * @author Pavel Bortnik
@@ -35,29 +39,33 @@ import java.util.Map;
 @Service
 public class SimpleStorage {
 
-	private Map<String, List<IndexLaunch>> repository;
+	private Map<String, List<AnalyzedItemRs>> repository;
 
 	public SimpleStorage() {
 		repository = new HashMap<>();
 	}
 
-	public Map<String, List<IndexLaunch>> getRepository() {
+	public Map<String, List<AnalyzedItemRs>> getRepository() {
 		return repository;
 	}
 
 	public void addAll(List<IndexLaunch> launches) {
 		IndexLaunch launch = launches.get(0);
-
-		if (repository.containsKey(launch.getProject())) {
-			List<IndexLaunch> indexLaunches = repository.get(launch.getProject());
-			indexLaunches.forEach(indexed -> {
-				if (indexed.getLaunchId().equals(launch.getLaunchId())) {
-					indexed.getTestItems().addAll(launch.getTestItems());
-				}
-			});
-		} else {
-			repository.put(launch.getProject(), Lists.newArrayList(launch));
+		String project = launch.getProject();
+		if (!repository.containsKey(project)) {
+			repository.put(project, new ArrayList<>());
 		}
+
+		List<AnalyzedItemRs> items = repository.get(project);
+
+		repository.putAll(launch.getTestItems().stream().collect(Collectors.toMap(it -> project, it -> {
+			AnalyzedItemRs analyzedItemRs = new AnalyzedItemRs();
+			analyzedItemRs.setItemId(it.getTestItemId());
+			analyzedItemRs.setIssueType(it.getIssueType());
+			analyzedItemRs.setUniqueId(it.getUniqueId());
+			items.add(analyzedItemRs);
+			return items;
+		})));
 	}
 
 	public void removeProject(String project) {
@@ -65,6 +73,7 @@ public class SimpleStorage {
 	}
 
 	public void cleanIndex(List<String> ids, String project) {
-		//clean index implementation
+		List<AnalyzedItemRs> newValue = repository.get(project).stream().filter(it -> !ids.contains(it.getItemId())).collect(toList());
+		repository.put(project, newValue);
 	}
 }
