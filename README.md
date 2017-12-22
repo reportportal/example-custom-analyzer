@@ -99,7 +99,7 @@ Report Portal accepts the analyzed items back as a response in the next json for
 ]
 ```
 
-As a result items are updated in ReportPortal database with a new issue, comment and reference in BTS if any are found.
+As a result items are updated in ReportPortal database with a new issue, comment and reference in BTS if any are found. Also new analyzed items are indexed.
 
 ### Analyzer with processing previous data
 
