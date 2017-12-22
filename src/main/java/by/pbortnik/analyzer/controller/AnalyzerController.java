@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,8 @@ public class AnalyzerController {
 		IndexLaunch indexLaunch = launches.get(0);
 		String project = indexLaunch.getProject();
 		indexLaunch.getTestItems().forEach(item -> {
-			List<AnalyzedItemRs> analyzedItemRs = simpleStorage.getRepository().get(project);
+			List<AnalyzedItemRs> analyzedItemRs = Optional.ofNullable(simpleStorage.getRepository().get(project))
+					.orElse(Collections.emptyList());
 			Optional<AnalyzedItemRs> relevantItem = analyzedItemRs.stream()
 					.filter(it -> it.getUniqueId().equals(item.getUniqueId()))
 					.findFirst();
