@@ -142,19 +142,19 @@ For correct interaction with Report Portal the analyzer must have several requir
 
 * `analyzer_priority=0` 
 
-      If the service is going to work with default analyzer together there should be specified the serivce's priority 
-      For basic analyzer it is 10. So if the current analyzer's resutls are more important than defaults the priority 
+      If the service is going to work together with default analyzer there should be specified the serivce's priority. 
+      For basic analyzer it is 10. So if the current analyzer's resutls are more important than default's the priority 
       parameter should be lower than 10. If the value is not specified or incorrect than the priority is the 
       lowest by default.
       
 * `analyzer_index=true`
 
-      If the service processes previous results it should have the tag 'analyzer_index=true'. Does index logs.
+      If the service processes previous results it should have the tag 'analyzer_index=true'. It does indexing of logs.
       If value is not specified or incorrect than 'false' by default.
 
 [Java configuration example](https://github.com/reportportal/example-custom-analyzer/blob/677f749e4de7297e9d385ca9c033aa38e9f359bc/src/main/resources/application.yaml)
 
-All included analyzers could be founded by sending a reques to the next endpoint:
+All included analyzers could be found by sending a request to the next endpoint:
 
 ```yaml
 GET
