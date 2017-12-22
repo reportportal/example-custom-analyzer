@@ -12,7 +12,7 @@ All supported endpoints that could be implemented in a custom analyzer are:
 [Analyze launch](#analyze)
 ```yaml
 POST
-http://analyzer_host:port/_analyzer
+http://analyzer_host:port/_analyze
 ```
 
 [Index items](#analyzer-with-processing-previous-data). Optional
@@ -38,7 +38,7 @@ http://analyzer_host:port/_index/delete
 In a custom analyzer should be implemented at least [one endpoint](https://github.com/reportportal/example-custom-analyzer/blob/945b958ca02babb90e25e072e455a4bdb34f51da/src/main/java/by/pbortnik/analyzer/controller/AnalyzerController.java#L23) that consumes request from RP with a launch to be analyzed using the next endpoint:
 ```yaml
 POST
-http://analyzer_host:port/_analyzer
+http://analyzer_host:port/_analyze
 ```
 It should consume requests in the next json format:
 
@@ -99,7 +99,7 @@ Report Portal accepts the analyzed items back as a response in the next json for
 ]
 ```
 
-As a result items are updated in ReportPortal database with a new issue, comment and reference in BTS if any are found.
+As a result items are updated in ReportPortal database with a new issue, comment and reference in BTS if any are found. Also new analyzed items are indexed.
 
 ### Analyzer with processing previous data
 
