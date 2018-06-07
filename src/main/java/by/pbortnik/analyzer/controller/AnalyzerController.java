@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -29,23 +27,18 @@ public class AnalyzerController {
 		List<AnalyzedItemRs> response = new ArrayList<>();
 		IndexLaunch indexLaunch = launches.get(0);
 		String project = indexLaunch.getProject();
-		indexLaunch.getTestItems().forEach(item -> {
-			List<AnalyzedItemRs> analyzedItemRs = Optional.ofNullable(simpleStorage.getRepository().get(project))
-					.orElse(Collections.emptyList());
-			Optional<AnalyzedItemRs> relevantItem = analyzedItemRs.stream()
-					.filter(it -> it.getUniqueId().equals(item.getUniqueId()))
-					.findFirst();
-
-			if (relevantItem.isPresent()) {
-				AnalyzedItemRs rs = new AnalyzedItemRs();
-				rs.setItemId(item.getTestItemId());
-				rs.setRelevantItemId(relevantItem.get().getItemId());
-				rs.setIssueType(relevantItem.get().getIssueType());
-				rs.setUniqueId(item.getUniqueId());
-				response.add(rs);
-			}
-
-		});
+		indexLaunch.getTestItems()
+				.forEach(item -> item.getLogs()
+						.stream()
+						.filter(it -> it.getMessage().contains("TooLittleActualInvocations"))
+						.findAny()
+						.ifPresent(it -> {
+							AnalyzedItemRs rs = new AnalyzedItemRs();
+							rs.setItemId(item.getTestItemId());
+							rs.setIssueType("AB001");
+							rs.setUniqueId(item.getUniqueId());
+							response.add(rs);
+						}));
 		return response;
 	}
 

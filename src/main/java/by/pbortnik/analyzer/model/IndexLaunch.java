@@ -41,6 +41,9 @@ public class IndexLaunch {
 	@JsonProperty("project")
 	private String project;
 
+	@JsonProperty("analyzerConfig")
+	private AnalyzerConfig analyzerConfig;
+
 	@JsonProperty("testItems")
 	private List<IndexTestItem> testItems;
 
