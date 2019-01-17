@@ -2,18 +2,9 @@ server:
   port: 8999
 
 spring:
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        tags:
-          - urlprefix-/custom-analyzer strip=/custom-analyzer
-          - analyzer=custom
-          - analyzer_priority=0
-          - analyzer_index=true
-        register: true
-      enabled: true
+  rabbitmq:
+    addresses: ${rp.amqp.addresses}
+
 endpoints:
   info:
     enabled: true
@@ -33,3 +24,17 @@ logging:
     org.springframework.beans: warn
     org.springframework.context: warn
     org.springframework.web: warn
+
+rp:
+  amqp:
+    addresses: amqp://${rp.amqp.user}:${rp.amqp.pass}@${rp.amqp.host}:${rp.amqp.port}
+    api-address: http://${rp.amqp.apiuser}:${rp.amqp.apipass}@${rp.amqp.host}:${rp.amqp.apiport}/api
+
+    host: localhost
+    port: 5672
+    user: rabbitmq
+    pass: rabbitmq
+
+    apiport: 15672
+    apiuser: rabbitmq
+    apipass: rabbitmq

@@ -1,6 +1,0 @@
-spring:
-  cloud:
-    consul:
-      discovery:
-        hostname: docker.for.win.localhost
-      host: localhost
