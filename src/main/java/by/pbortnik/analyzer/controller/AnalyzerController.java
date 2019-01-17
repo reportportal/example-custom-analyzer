@@ -5,22 +5,26 @@ import by.pbortnik.analyzer.model.AnalyzedItemRs;
 import by.pbortnik.analyzer.model.CleanIndexRq;
 import by.pbortnik.analyzer.model.IndexLaunch;
 import by.pbortnik.analyzer.model.IndexRs;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AnalyzerController {
 
 	@Autowired
 	private SimpleStorage simpleStorage;
 
-	public List<AnalyzedItemRs> analyze(@RequestBody List<IndexLaunch> launches) {
+	@RabbitListener(queues = "custom-rp-analyzer")
+	public List<AnalyzedItemRs> analyze(@Payload IndexLaunch indexLaunch) {
 		List<AnalyzedItemRs> response = new ArrayList<>();
-		IndexLaunch indexLaunch = launches.get(0);
 		String project = indexLaunch.getProject();
 		indexLaunch.getTestItems()
 				.forEach(item -> item.getLogs()
