@@ -33,13 +33,13 @@ import java.util.List;
 public class IndexLaunch {
 
 	@JsonProperty("launchId")
-	private String launchId;
+	private Long launchId;
 
 	@JsonProperty("launchName")
 	private String launchName;
 
 	@JsonProperty("project")
-	private String project;
+	private Long project;
 
 	@JsonProperty("analyzerConfig")
 	private AnalyzerConfig analyzerConfig;
@@ -50,11 +50,11 @@ public class IndexLaunch {
 	public IndexLaunch() {
 	}
 
-	public String getLaunchId() {
+	public Long getLaunchId() {
 		return launchId;
 	}
 
-	public void setLaunchId(String launchId) {
+	public void setLaunchId(Long launchId) {
 		this.launchId = launchId;
 	}
 
@@ -66,11 +66,11 @@ public class IndexLaunch {
 		this.launchName = launchName;
 	}
 
-	public String getProject() {
+	public Long getProject() {
 		return project;
 	}
 
-	public void setProject(String project) {
+	public void setProject(Long project) {
 		this.project = project;
 	}
 

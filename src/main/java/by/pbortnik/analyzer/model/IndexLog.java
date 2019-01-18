@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class IndexLog {
 
 	@JsonProperty("logId")
-	private String logId;
+	private Long logId;
 
 	@JsonProperty("logLevel")
 	private int logLevel;
@@ -42,11 +42,11 @@ public class IndexLog {
 	public IndexLog() {
 	}
 
-	public String getLogId() {
+	public Long getLogId() {
 		return logId;
 	}
 
-	public void setLogId(String logId) {
+	public void setLogId(Long logId) {
 		this.logId = logId;
 	}
 

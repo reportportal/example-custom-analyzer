@@ -19,7 +19,7 @@
  *
  */
 
-package by.pbortnik.analyzer.model;
+package com.epam.ta.reportportal.core.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,50 +29,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AnalyzedItemRs implements Comparable<AnalyzedItemRs> {
 
 	@JsonProperty("test_item")
-	private String itemId;
+	private Long itemId;
 
 	@JsonProperty("relevant_item")
-	private String relevantItemId;
+	private Long relevantItemId;
 
 	@JsonProperty("issue_type")
-	private String issueType;
-
-	private String uniqueId;
+	private Long issueType;
 
 	@Override
 	public int compareTo(AnalyzedItemRs o) {
 		return itemId.compareTo(o.getItemId());
 	}
 
-	public String getItemId() {
+	public Long getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(String itemId) {
+	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
 
-	public String getRelevantItemId() {
+	public Long getRelevantItemId() {
 		return relevantItemId;
 	}
 
-	public void setRelevantItemId(String relevantItemId) {
+	public void setRelevantItemId(Long relevantItemId) {
 		this.relevantItemId = relevantItemId;
 	}
 
-	public String getIssueType() {
+	public Long getIssueType() {
 		return issueType;
 	}
 
-	public void setIssueType(String issueType) {
+	public void setIssueType(Long issueType) {
 		this.issueType = issueType;
-	}
-
-	public String getUniqueId() {
-		return uniqueId;
-	}
-
-	public void setUniqueId(String uniqueId) {
-		this.uniqueId = uniqueId;
 	}
 }

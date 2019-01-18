@@ -1,16 +1,21 @@
 package by.pbortnik.analyzer.config;
 
+import by.pbortnik.analyzer.JacksonViewAwareModule;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JavaTypeMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +35,9 @@ import java.util.Map;
 @Configuration
 public class RabbitMqConfiguration {
 
-	@Autowired
-	private ObjectMapper objectMapper;
-
 	@Bean
 	public MessageConverter jsonMessageConverter() {
-		return new Jackson2JsonMessageConverter(objectMapper);
+		return new Jackson2JsonMessageConverter();
 	}
 
 	@Bean(name = "analyzerConnectionFactory")
@@ -43,18 +45,6 @@ public class RabbitMqConfiguration {
 		CachingConnectionFactory factory = new CachingConnectionFactory(addresses);
 		factory.setVirtualHost("analyzer");
 		return factory;
-	}
-
-	@Bean(name = "analyzerRabbitTemplate")
-	public RabbitTemplate asyncRabbitTemplate(@Autowired @Qualifier("analyzerConnectionFactory") ConnectionFactory connectionFactory) {
-		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-		rabbitTemplate.setMessageConverter(jsonMessageConverter());
-		return rabbitTemplate;
-	}
-
-	@Bean
-	public AsyncRabbitTemplate asyncAmqpTemplate(@Autowired @Qualifier("analyzerRabbitTemplate") RabbitTemplate rabbitTemplate) {
-		return new AsyncRabbitTemplate(rabbitTemplate);
 	}
 
 	@Bean
@@ -67,7 +57,7 @@ public class RabbitMqConfiguration {
 
 	@Bean
 	public Queue analyzeQueue() {
-		return new Queue("custom-rp-analyzer");
+		return QueueBuilder.durable("custom-rp-analyzer").build();
 	}
 
 	@Bean

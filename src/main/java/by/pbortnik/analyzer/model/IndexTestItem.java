@@ -33,7 +33,7 @@ import java.util.List;
 public class IndexTestItem {
 
 	@JsonProperty("testItemId")
-	private String testItemId;
+	private Long testItemId;
 
 	@JsonProperty("issueType")
 	private String issueType;
@@ -47,11 +47,11 @@ public class IndexTestItem {
 	public IndexTestItem() {
 	}
 
-	public String getTestItemId() {
+	public Long getTestItemId() {
 		return testItemId;
 	}
 
-	public void setTestItemId(String testItemId) {
+	public void setTestItemId(Long testItemId) {
 		this.testItemId = testItemId;
 	}
 
