@@ -2,7 +2,7 @@
 
 Since the version 5.0 Report Portal uses a different communication interface between API and Analyzers. The implementation of the analyzer was moved to the
 separate service. To exchange information they use RabbitMQ message broker/ If the default implementation does not provide a solution it can be extended by a
-custom implementation of an analyzer. The default analyzer can work together with a custom one. ReportPortal has a [client](https://github.com/reportportal/service-api/blob/ps-migrations/src/main/java/com/epam/ta/reportportal/core/analyzer/AnalyzerServiceClient.java) that communicates
+custom implementation of an analyzer. The default analyzer can work together with a custom one. ReportPortal has a [client](https://github.com/reportportal/service-api/blob/ps-migrations/src/main/java/com/epam/ta/reportportal/core/analyzer/client/AnalyzerServiceClient.java) that communicates
 with analyzers by RabbitMQ and it has a pretty simple interface. 
 
 ### Configuring service for RabbitMQ
