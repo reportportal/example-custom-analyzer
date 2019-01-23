@@ -36,9 +36,10 @@ public class RabbitMqConfiguration {
 	@Bean
 	public DirectExchange directExchange() {
 		Map<String, Object> params = new HashMap<>();
-		params.put("priority", 1);
+		params.put("analyzer_priority", 1);
 		params.put("analyzer", "custom-rp-analyzer");
-		return new DirectExchange("custom-rp-analyzer", true, false, params);
+		params.put("analyzer_index", true);
+		return new DirectExchange("custom-rp-analyzer", true, true, params);
 	}
 
 	@Bean
@@ -49,5 +50,25 @@ public class RabbitMqConfiguration {
 	@Bean
 	public Binding analyzeQueueBinding() {
 		return BindingBuilder.bind(analyzeQueue()).to(directExchange()).with("analyze");
+	}
+
+	@Bean
+	public Queue indexQueue() {
+		return QueueBuilder.durable("custom-rp-index").build();
+	}
+
+	@Bean
+	public Binding indexQueueBinding() {
+		return BindingBuilder.bind(indexQueue()).to(directExchange()).with("index");
+	}
+
+	@Bean
+	public Queue deleteQueue() {
+		return QueueBuilder.durable("custom-rp-delete").build();
+	}
+
+	@Bean
+	public Binding deleteQueueBinding() {
+		return BindingBuilder.bind(deleteQueue()).to(directExchange()).with("delete");
 	}
 }

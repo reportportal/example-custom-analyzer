@@ -19,7 +19,7 @@
  *
  */
 
-package com.epam.ta.reportportal.core.analyzer.model;
+package by.pbortnik.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -35,7 +35,7 @@ public class AnalyzedItemRs implements Comparable<AnalyzedItemRs> {
 	private Long relevantItemId;
 
 	@JsonProperty("issue_type")
-	private Long issueType;
+	private String locator;
 
 	@Override
 	public int compareTo(AnalyzedItemRs o) {
@@ -58,11 +58,16 @@ public class AnalyzedItemRs implements Comparable<AnalyzedItemRs> {
 		this.relevantItemId = relevantItemId;
 	}
 
-	public Long getIssueType() {
-		return issueType;
+	public String getLocator() {
+		return locator;
 	}
 
-	public void setIssueType(Long issueType) {
-		this.issueType = issueType;
+	public void setLocator(String locator) {
+		this.locator = locator;
+	}
+
+	@Override
+	public String toString() {
+		return "AnalyzedItemRs{" + "itemId=" + itemId + ", relevantItemId=" + relevantItemId + ", issueTypeLocator=" + locator + '}';
 	}
 }
